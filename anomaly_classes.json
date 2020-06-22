@@ -1,0 +1,20 @@
+{
+    "description": "Classes in the UCF Crime dataset",
+    "classes": 
+    {
+		"Abuse": 0,
+		"Arrest": 1,
+		"Arson": 2,
+		"Assault": 3,
+		"Burglary": 4,
+		"Explosion": 5,
+		"Fighting": 6,
+		"RoadAccidents": 7,
+		"Robbery": 8,
+		"Shooting": 9,
+		"Shoplifting": 10,
+		"Stealing": 11,
+		"Vandalism": 12,
+		"Normal": 13
+    }
+}
