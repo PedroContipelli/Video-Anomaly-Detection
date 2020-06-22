@@ -15,7 +15,7 @@
 #python3 main.py --train_classifier --gpu 0 --run_id run9_C3D --run_description "Run9 testing transformer bug" --model_init "kaiming_uniform" --input_dim 4096 --features "c3d"
 #python3 main.py --train_classifier --gpu 0 --run_id run10_C3D --run_description "Run10 testing transformer bug" --model_init "xavier_normal" --input_dim 4096 --features "c3d"
 #python3 main.py --train_classifier --gpu 0 --run_id run11_C3D --run_description "Run11 testing transformer bug" --model_init "xavier_uniform" --input_dim 4096 --features "c3d"
-
+#TESTING GIT PULL
 
 
 #--------------------- I3D Experiments ----------------------------------#
