@@ -203,7 +203,7 @@ def train_model(run_id, save_dir, use_cuda, args, writer):
     print("Steps per epoch: " + str(steps_per_epoch))
 
 #   model = FuturePredictionModel(input_dim=args.input_dim)
-    model = build_model(args.input_dim, 8)                     # make nheads an argument later
+    model = build_model(args.input_dim, 8, 1)                     # make nheads & numlayers an argument later
 
     if args.model_init == 'kaiming_normal':
         model.apply(weights_init_kaiming_normal)

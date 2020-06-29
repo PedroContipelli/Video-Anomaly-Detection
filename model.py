@@ -84,9 +84,6 @@ class TransformerEncoderLayer(nn.Module):
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout1 = nn.Dropout(dropout)
         self.dropout2 = nn.Dropout(dropout)
-        self.classification = nn.Sequential(nn.Linear(d_model, d_model//2), nn.ReLU(), 
-                                            nn.Linear(d_model//2, d_model//4), nn.ReLU(), 
-                                            nn.Linear(d_model//4, 1), nn.Sigmoid())
         self.activation = _get_activation_fn(activation)
 
     def __setstate__(self, state):
@@ -101,17 +98,34 @@ class TransformerEncoderLayer(nn.Module):
         src2 = self.linear2(self.dropout(self.activation(self.linear1(src))))
         src = src + self.dropout2(src2)
         src = self.norm2(src)
+        return src, weights
+
+
+class AnomalyModel(nn.Module):
+    def __init__(self, d_model, nhead, num_layers):
+        super(AnomalyModel, self).__init__()
+        self.num_layers = num_layers
+        self.positional_encoding = PositionalEncoding(d_model, max_len=5000)
+        self.layers = nn.ModuleList([TransformerEncoderLayer(d_model, nhead) for i in range(self.num_layers)])
+        self.classification = nn.Sequential(nn.Linear(d_model, d_model//2), nn.ReLU(),
+                                            nn.Linear(d_model//2, d_model//4), nn.ReLU(),
+                                            nn.Linear(d_model//4, 1), nn.Sigmoid())
+
+    def forward(self, src):
+        #src = self.positional_encoding(src)
+        for i in range(self.num_layers):
+            src, weights = self.layers[i](src)
         classification_output = self.classification(src).squeeze(-1)
         return src, classification_output, weights
 
 
-def build_model(num_features, num_heads):
-    model = TransformerEncoderLayer(num_features, num_heads)
+def build_model(num_features, num_heads, num_layers):
+    model = AnomalyModel(num_features, num_heads, num_layers)
     return model
 
 
 if __name__ == '__main__':
-    model = build_model(4096, 8)
+    model = build_model(4096, 8, 5)
     features = Variable(torch.rand(16, 32, 4096))
     reconstruction_output, classification_output, attention  = model(features)
     print(reconstruction_output.shape, classification_output.shape, attention.shape)
