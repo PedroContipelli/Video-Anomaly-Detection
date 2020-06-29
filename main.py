@@ -55,6 +55,8 @@ if __name__ == '__main__':
                         help='Number of anomaly classes.')
     parser.add_argument('--input_dim', type=int, default=params.input_dim,
                         help='Input feature dimension.')
+    parser.add_argument('--attention_layers', type=int, default=params.attention_layers, help='Layers of Attention')
+    parser.add_argument('--num_heads', type=int, default=params.num_heads, help='Number of heads')
 
     parser.add_argument('--num_epochs', type=int, default=params.num_epochs,
                         help='Number of epochs.')

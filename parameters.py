@@ -5,9 +5,10 @@ batch_size = 32
 num_classes = 14
 features = 'c3d'
 input_dim = 4096
+attention_layers = 1
+num_heads = 8
 
 num_epochs = 100
-
 checkpoint = 5
 
 alpha = 1e-4
