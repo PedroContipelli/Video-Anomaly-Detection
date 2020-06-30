@@ -13,9 +13,10 @@ class CustomLoss(torch.nn.Module):
             predicted_score = predicted_scores[i].squeeze()
             d = pdist(features[i][1:], predicted_features[i][:-1]).squeeze()
             max_index = torch.argmax(d)
-            if labels[i] == 13:
+            
+            if labels[i] == 13: # Not Anomalous
                 loss += d[max_index] + predicted_score[max_index]
-            else:
+            else: # Anomalous
                 loss += 1 - predicted_score[max_index]
         return loss
 
